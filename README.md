@@ -6,8 +6,8 @@ To set up this auction platform on your PC, follow these steps:
 
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/your-username/auction-platform.git
-    cd auction-platform/frontend
+    git clone https://github.com/animenzo/auction.git
+    cd auction/frontend
     ```
 
 2. **Install dependencies**:
