@@ -1,24 +1,53 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { UserDataContext } from "../context/UserContext";
+import { toast } from "react-toastify";
 
 const UserSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const { user, setUser } = React.useContext(UserDataContext);
+  const [errors, setErrors] = useState({});
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/Home')
+    const newUser = {
+      email: email,
+      password: password,
+      fullname: {
+        firstname: firstName,
+        lastname: lastName,
+      },
+    };
 
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/users/register`,
+      newUser
+    );
+
+    if (response.status === 201) {
+      const data = response.data;
+      setUser(data.user);
+      localStorage.setItem("token", data.token);
+
+      navigate("/home");
+    }
+    // console.log(userData)
     setEmail("");
     setPassword("");
     setFirstName("");
     setLastName("");
 
-  }
+    if (errors) {
+      toast.error("Invalid Email or Password");
+    }
+  };
+
 
   return (
     <div
@@ -31,7 +60,7 @@ const UserSignup = () => {
       <div className="container mb-9">
       
         <div className="col-lg-6 col-md-6  col-12 mx-auto bg-white rounded p-4 shadow">
-          <form>
+          <form onSubmit={(e)=>handleSubmit(e)}>
             <h3 className="fw-bold mb-3">What's your name?</h3>
             <div className="row g-2 mb-4">
               <div className="col">
@@ -76,7 +105,7 @@ const UserSignup = () => {
               placeholder="Password"
             />
 
-            <button onClick={handleSubmit} className="btn btn-dark w-100 mb-3">
+            <button className="btn btn-dark w-100 mb-3">
               Create Account
             </button>
 

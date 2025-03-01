@@ -15,7 +15,8 @@ const Home = () => {
           <div className=" w-75 d-flex justify-content-between " id="navbarNav">
            
                 <Link className="nav-link text-dark" to="/home">Home</Link>
-                <Link className="nav-link text-dark" to="/dashboard">Dashboard</Link>
+                <Link className="nav-link text-dark" to="/auctions">Auctions</Link>
+                <Link className="nav-link text-dark" to="/auction/create">Create Auction</Link>
                 <Link className="nav-link text-dark" to="/userprofile">User Profile</Link>
                 <Link className="nav-link text-danger" to="/">Logout</Link>
           </div>
